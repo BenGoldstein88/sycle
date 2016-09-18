@@ -1,5 +1,7 @@
 import React from 'react';
 import LoginForm from './LoginForm';
+import ListingsList from './ListingsList'
+import axios from 'axios'
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -30,9 +32,12 @@ export default class Home extends React.Component {
   
   render() {
   	if(this.state.loggedIn) {
-  		var thingToDisplay = 	<form onSubmit={this.handleLogout}>
-  									<input type='submit' value='Logout' />
-  								</form>
+  		var thingToDisplay = 	<div>
+  									<ListingsList authToken={this.state.authToken}/>
+  									<form onSubmit={this.handleLogout}>
+  										<input type='submit' value='Logout' />
+  									</form>
+  								</div>
 
   	} else {
   		var thingToDisplay = <LoginForm onLogin={this.handleLogin}/>
