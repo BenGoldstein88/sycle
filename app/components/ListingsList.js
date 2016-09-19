@@ -17,7 +17,7 @@ export default class ListingsList extends React.Component {
   getListings() {
   	axios({
   		method: 'get',
-  		url: 'http://localhost:3000/userindex',
+  		url: 'http://localhost:3000/currentauction',
   		headers: { 'Authorization': this.props.authToken}
   	})
   	.then(function(response) {
