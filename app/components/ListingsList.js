@@ -9,14 +9,17 @@ export default class ListingsList extends React.Component {
 
     this.state= {
     	auction: {},
-    	listings: []
+    	listings: [],
+    	bids: []
     }
 
     this.getListings = this.getListings.bind(this)
     this.getUserListings = this.getUserListings.bind(this)
+    this.getUserBids = this.getUserBids.bind(this)
   }
 
-  getListings() {
+  getListings(e) {
+  	e.preventDefault();
   	var that = this
 
   	axios({
@@ -36,7 +39,8 @@ export default class ListingsList extends React.Component {
   	})
   }
 
-  getUserListings() {
+  getUserListings(e) {
+  	e.preventDefault();
   	var that = this
   	axios({
   		method: 'get',
@@ -54,6 +58,25 @@ export default class ListingsList extends React.Component {
   	})  	
   }
 
+  getUserBids(e) {
+  	e.preventDefault();
+  	var that = this
+  	axios({
+  		method: 'get',
+  		url: 'http://localhost:3000/userbids',
+  		headers: { 'Authorization': that.props.authToken}
+  	})
+  	.then(function(response) {
+  		console.log('Response: ', response)
+  		that.setState({
+  			bids: response.data.bids
+  		})
+  	})
+  	.catch(function(error) {
+  		console.log('Error: ', error)
+  	})  	
+  }
+
   render() {
     return (
       <div>
@@ -62,6 +85,9 @@ export default class ListingsList extends React.Component {
       </form>
       <form onSubmit={this.getUserListings} >
       	<input type='submit' value='Your Listings' />
+      </form>
+      <form onSubmit={this.getUserBids} >
+      	<input type='submit' value='Your Bids' />
       </form>
       </div>
     );

@@ -19,8 +19,6 @@ export default class LoginForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
     var that = this
-  	console.log('submitted! (not really)')
-  	console.log('e', e)
     axios({
       method: 'post',
       url: 'http://localhost:3000/authenticate',
@@ -30,7 +28,7 @@ export default class LoginForm extends React.Component {
       }
     })
       .then(function(response) {
-      console.log("Here's the response: ", response)
+      console.log("Here's the login response: ", response)
       that.props.onLogin(response.data.auth_token)
     })
       .catch(function(error) {
