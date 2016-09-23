@@ -1,8 +1,8 @@
 import React from 'react';
+import axios from 'axios';
 import LoginForm from './LoginForm';
 import ListingsList from './ListingsList'
-import axios from 'axios'
-
+import NewUserForm from './NewUserForm'
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -14,12 +14,26 @@ export default class Home extends React.Component {
     this.handleLogin = this.handleLogin.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
   }
-
-  handleLogin(authToken) {
-  	this.setState({
-  		loggedIn: true,
-  		authToken: authToken
-  	})
+  handleLogin(email, password) {
+  	var that = this
+    axios({
+      method: 'post',
+      url: 'http://localhost:3000/authenticate',
+      data: {
+        email: email,
+        password: password
+      }
+    })
+      .then(function(response) {
+      console.log("Here's the login response: ", response)
+      that.setState({
+      	loggedIn: true,
+      	authToken: response.data.auth_token
+      })
+    })
+      .catch(function(error) {
+        console.log('There was an error!', error)
+      })
   }
 
   handleLogout(e) {
@@ -47,6 +61,7 @@ export default class Home extends React.Component {
       <div>
         <h1> Hello there, syclist! </h1>
         {thingToDisplay}
+        <NewUserForm />
       </div>
     );
   }

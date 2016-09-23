@@ -18,22 +18,7 @@ export default class LoginForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    var that = this
-    axios({
-      method: 'post',
-      url: 'http://localhost:3000/authenticate',
-      data: {
-        email: that.state.email,
-        password: that.state.password
-      }
-    })
-      .then(function(response) {
-      console.log("Here's the login response: ", response)
-      that.props.onLogin(response.data.auth_token)
-    })
-      .catch(function(error) {
-        console.log('There was an error!', error)
-      })
+    this.props.onLogin(this.state.email, this.state.password)
   }
 
   handleEmailChange(e) {
